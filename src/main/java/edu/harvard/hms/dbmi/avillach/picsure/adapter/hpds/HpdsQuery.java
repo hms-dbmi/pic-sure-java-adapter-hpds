@@ -3,16 +3,14 @@ package edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds;
 import edu.harvard.hms.dbmi.avillach.hpds.data.query.Query;
 import edu.harvard.hms.dbmi.avillach.hpds.data.query.Filter.DoubleFilter;
 
-import edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds.HpdsQueryCriteria;
-
 
 import java.util.*;
 
 public class HpdsQuery {
     private HpdsResourceConnection resourceConnection;
-    private HpdsAttrListKeys listSelect = new HpdsAttrListKeys("");
-    private HpdsAttrListKeys listRequire = new HpdsAttrListKeys("");
-    private HpdsAttrListKeyValues listFilter = new HpdsAttrListKeyValues("");
+    private HpdsQueryCriteriaKeys listSelect = new HpdsQueryCriteriaKeys("");
+    private HpdsQueryCriteriaKeys listRequire = new HpdsQueryCriteriaKeys("");
+    private HpdsQueryCriteriaKeyValues listFilter = new HpdsQueryCriteriaKeyValues("");
 
     protected HpdsQuery(HpdsResourceConnection rc) {
         this.resourceConnection = rc;
@@ -24,13 +22,13 @@ public class HpdsQuery {
     public void show() {
         // for jShell
     }
-    public HpdsAttrListKeys select() {
+    public HpdsQueryCriteriaKeys select() {
         return this.listSelect;
     }
-    public HpdsAttrListKeys require() {
+    public HpdsQueryCriteriaKeys require() {
         return this.listRequire;
     }
-    public HpdsAttrListKeyValues filter() {
+    public HpdsQueryCriteriaKeyValues filter() {
         return this.listFilter;
     }
 

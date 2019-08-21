@@ -3,23 +3,22 @@ package edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.lang.ArrayStoreException;
-import java.lang.IndexOutOfBoundsException;
+
 import java.util.NoSuchElementException;
+import java.lang.ArrayStoreException;
 import javax.management.openmbean.KeyAlreadyExistsException;
+import java.lang.IllegalStateException;
+
 
 import edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds.HpdsQueryCriteria;
 
-public class HpdsAttrListKeys {
+public class HpdsQueryCriteriaKeys {
     private String helpText;
-    protected HashMap<String, HpdsQueryCriteria> entries;
-
-    public static final String ERROR_MSG_ENTRY_EXISTS = "Can not add new query restriction, key already exists: ";
-    public static final String ERROR_MSG_ENTRY_MISSING = "Can not delete/change query restriction, key does not exists: ";
-    public static final String ERROR_MSG_ENTRY_WRONG_TYPE = "Can not change query restriction, existing key references the wrong type: ";
-
-
-    protected HpdsAttrListKeys(String helpDesc) {
+    protected HashMap<String, HpdsQueryCriteria> entries = new HashMap<>();
+    protected HpdsQueryCriteriaKeys() {
+        this.helpText = "";
+    }
+    protected HpdsQueryCriteriaKeys(String helpDesc) {
         this.helpText = helpDesc;
     }
 
@@ -40,7 +39,7 @@ public class HpdsAttrListKeys {
         for (Integer i = 0; i < l; i++) {
             String newKey = keys.get(i);
             if (this.entries.containsKey(newKey)) {
-                throw new KeyAlreadyExistsException(ERROR_MSG_ENTRY_EXISTS + newKey);
+                throw new KeyAlreadyExistsException(HpdsQueryCriteria.ERROR_MSG_ENTRY_EXISTS + newKey);
             } else {
                 HpdsQueryCriteria temp = new HpdsQueryCriteria();
                 temp.queryKey = newKey;
@@ -69,7 +68,7 @@ public class HpdsAttrListKeys {
             if (this.entries.containsKey(searchKey)) {
                 this.entries.remove(searchKey);
             } else {
-                throw new NoSuchElementException(ERROR_MSG_ENTRY_MISSING + searchKey);
+                throw new NoSuchElementException(HpdsQueryCriteria.ERROR_MSG_ENTRY_MISSING + searchKey);
             }
         }
     }
@@ -91,41 +90,4 @@ public class HpdsAttrListKeys {
         // this function is used by unit tests
         return (HashMap<String, HpdsQueryCriteria>) this.entries.clone();
     }
-
 }
-
-
-
-
-/*
-public class HpdsAttrListKeys extends HpdsAttrList{
-
-    protected HpdsAttrListKeys(String helpDesc) {
-        super(helpDesc);
-    }
-
-
-
-    public void add(String key) {
-        // add a single key
-        super.add(key);
-    }
-    public void add(List<String> keys) {
-        // add multiple keys
-        super.add(keys);
-    }
-    public void delete(String key) {
-        // delete a single key
-        super.delete(key);
-    }
-    public void delete(List<String> keys) {
-        // delete multiple keys
-        super.delete(keys);
-    }
-
-    public void show() {
-        // for jShell
-        // Custom display of entries is performed here
-    }
-}
-*/
