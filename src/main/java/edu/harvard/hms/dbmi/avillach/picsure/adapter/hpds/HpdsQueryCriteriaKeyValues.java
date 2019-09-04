@@ -1,6 +1,7 @@
 package edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import java.util.NoSuchElementException;
@@ -205,6 +206,23 @@ public final class HpdsQueryCriteriaKeyValues extends HpdsQueryCriteriaKeys {
                 throw new NoSuchElementException(HpdsQueryCriteria.ERROR_MSG_ENTRY_MISSING + searchKey);
             }
         }
+    }
+    // ===[ OTHER FUNCTIONS ]========================================
+    public void show() {
+        // for jShell
+    }
+    public void help() {
+        // for jShell
+    }
+
+    public void clear() {
+        this.entries.clear();
+    }
+
+    public HashMap<String, HpdsQueryCriteria> getRawEntries() {
+        // this call also allows changes to the internal state since it does a shallow copy via .clone()
+        // this function is used by unit tests
+        return (HashMap<String, HpdsQueryCriteria>) this.entries.clone();
     }
 
 }

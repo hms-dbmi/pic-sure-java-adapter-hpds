@@ -3,24 +3,28 @@ package edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds;
 import java.util.*;
 
 public class HpdsDictionaryResults {
-    private List results;
-    protected HpdsDictionaryResults(List results) {
-        this.results = results;
+    private Map<String, Object> results;
+    protected HpdsDictionaryResults(Object results) {
+        // reformat the object structure into a list
+        HashMap<String, Object> processedResults = new HashMap<>();
+        this.results = processedResults;
     }
 
     public void help() {
         // for jShell
     }
     public int count() {
-        return 0;
+        return this.results.size();
     }
     public List<String> keys() {
         List<String> ret = new ArrayList<>();
+        ret.addAll(this.results.keySet());
         return ret;
     }
 
-    public List<String> entries() {
-        List<String> ret = new ArrayList<>();
+    public List<Object> entries() {
+        List<Object> ret = new ArrayList<>();
+        ret.addAll(this.results.entrySet());
         return ret;
     }
 }

@@ -35,8 +35,8 @@ public class HpdsQuery {
     public Integer getCount() {
         return 0;
     }
-    public List<String> getResults() {
-        return new ArrayList<String>();
+    public List<String[]> getResults() {
+        return new ArrayList<String[]>();
     }
     public void getRunDetails() {
         // for jShell
@@ -44,24 +44,36 @@ public class HpdsQuery {
     public void getQueryCommand() {
         // for jShell
     }
-    private Query buildQuery() {
+    protected Query buildQuery() {
+        HashMap<String, HpdsQueryCriteria> entries;
+
         Query tempQuery = new Query();
 
         //  SET THE SELECT FILTERS
-        tempQuery.fields.addAll(this.listSelect.getRawEntries().keySet());
+        entries = this.listSelect.getRawEntries();
+        if (entries.size() > 0) {
+            tempQuery.fields = new ArrayList<>();
+            tempQuery.fields.addAll(entries.keySet());
+        }
 
         //  SET THE REQUIRE FILTERS
-        tempQuery.requiredFields.addAll(this.listRequire.getRawEntries().keySet());
+        entries = this.listRequire.getRawEntries();
+        if (entries.size() > 0) {
+            tempQuery.requiredFields = new ArrayList<>();
+            tempQuery.requiredFields.addAll(entries.keySet());
+        }
 
         // Category Filters
-        HashMap<String, HpdsQueryCriteria> entries = this.listFilter.getRawEntries();
+        entries = this.listFilter.getRawEntries();
         for(String key : entries.keySet()) {
             HpdsQueryCriteria entry = (HpdsQueryCriteria) entries.get(key);
             switch (entry.entryType) {
                 case HpdsQueryCriteria.ENTRY_TYPE_CATEGORICAL:
+                    if (tempQuery.categoryFilters == null) tempQuery.categoryFilters = new HashMap<String, String[]>();
                     tempQuery.categoryFilters.put(key, entry.categories.toArray(new String[0]));
                     break;
                 case HpdsQueryCriteria.ENTRY_TYPE_RANGE:
+                    if (tempQuery.numericFilters == null) tempQuery.numericFilters = new HashMap<String, DoubleFilter>();
                     tempQuery.numericFilters.put(key, new DoubleFilter(entry.min, entry.max));
                     break;
                 default:
