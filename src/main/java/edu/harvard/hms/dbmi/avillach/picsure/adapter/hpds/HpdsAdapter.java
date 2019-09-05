@@ -11,23 +11,13 @@ public class HpdsAdapter extends BasePicSureAdapter {
     private IPicSureConnectionAPI hpdsApiObj;
     private IPicSureConnection hpdsConnectionObj;
 
-    public HpdsAdapter(Connection connection) {
-        super(connection);
-        this.hpdsConnectionObj = HpdsAdapter.super.refConnectionObj;
-        this.hpdsApiObj = HpdsAdapter.super.refApiObj;
-    }
-
-    public String getConnectionToken(){
-        return this.hpdsConnectionObj.getTOKEN();
-    }
-
-    public void help() {
+    public static void help() {
         // for jShell
     }
-    public void version() {
+    public static void version() {
         // for jShell
     }
-    public HpdsResourceConnection useResource(UUID resource_uuid) {
-        return new HpdsResourceConnection(this, resource_uuid);
+    public static HpdsResourceConnection useResource(IPicSureConnection connection, UUID resource_uuid) {
+        return new HpdsResourceConnection(connection, resource_uuid);
     }
 }

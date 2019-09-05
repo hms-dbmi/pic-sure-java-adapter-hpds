@@ -19,6 +19,7 @@ import static org.mockito.Mockito.*;
 
 public class HpdsQueryTest {
 
+/*
     @Test
     public void testInstantiation() {
         Connection mockConnection = mock(Connection.class);
@@ -72,5 +73,6 @@ public class HpdsQueryTest {
 
     }
 
+*/
 
 }

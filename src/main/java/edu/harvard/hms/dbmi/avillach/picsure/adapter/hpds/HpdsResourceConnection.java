@@ -9,10 +9,10 @@ public class HpdsResourceConnection extends BasePicSureResourceConnection {
     protected IPicSureConnection refConnectionObj;
     protected IPicSureConnectionAPI refApiObj;
 
-    protected HpdsResourceConnection(HpdsAdapter adapter, UUID resource_uuid) {
-        super(adapter, resource_uuid);
-        this.refConnectionObj = adapter.refConnectionObj;
-        this.refApiObj = adapter.refApiObj;
+    protected HpdsResourceConnection(IPicSureConnection connection, UUID resource_uuid) {
+        super(connection, resource_uuid);
+        this.refConnectionObj = connection;
+        this.refApiObj = connection.getApiObject();
     }
 
     @Override

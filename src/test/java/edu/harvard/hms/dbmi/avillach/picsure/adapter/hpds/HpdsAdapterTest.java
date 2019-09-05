@@ -1,20 +1,18 @@
-package edu.harvard.hms.dbmi.avillach.picsure.client;
+package edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds;
 
 import edu.harvard.dbmi.avillach.domain.QueryRequest;
 import edu.harvard.dbmi.avillach.domain.SearchResults;
 import edu.harvard.hms.dbmi.avillach.hpds.data.query.Query;
 import edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds.*;
+import edu.harvard.hms.dbmi.avillach.picsure.client.*;
 import org.apache.commons.codec.Charsets;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -73,13 +71,39 @@ public class HpdsAdapterTest {
         return searchResults;
     }
 
+    @Test
+    public void testConnectionSetup() {
+        // test to confirm that the connection, resource uuid, and ApiObject are properly passed
+        String myToken = "MY_TOKEN_STRING";
+        URL myEndpoint = null;
+        try {
+            myEndpoint = new URL("http://MY_ENDPOINT_STRING");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        PicSureConnectionAPI mockAPI = mock(PicSureConnectionAPI.class);
+        IPicSureConnection mockConnection = mock(IPicSureConnection.class);
+        when(mockConnection.getApiObject()).thenReturn(mockAPI);
+        when(mockConnection.getTOKEN()).thenReturn(myToken);
+        when(mockConnection.getENDPOINT()).thenReturn(myEndpoint);
+
+
+        UUID resourceId = UUID.randomUUID();
+        HpdsResourceConnection resource = HpdsAdapter.useResource(mockConnection, resourceId);
+
+        assertSame("The connection object should be the same", mockConnection, resource.refConnectionObj);
+        assertSame("The ApiObject should be the same", mockAPI, resource.refApiObj);
+        assertSame("The resource UUID should be the same", resourceId, resource.RESOURCE_UUID);
+        assertEquals("The Token should be the same", myToken, resource.TOKEN);
+        assertEquals("The Endpoint should be the same", myEndpoint, resource.ENDPOINT_URL);
+
+    }
+
 
     @Test
     public void testMockApiInstantiation() {
 
-        OutputStream resultStream = new ByteArrayOutputStream();
-
-        PicSureConnectionAPI mockAPI = mock(PicSureConnectionAPI.class);
 
 
 /*

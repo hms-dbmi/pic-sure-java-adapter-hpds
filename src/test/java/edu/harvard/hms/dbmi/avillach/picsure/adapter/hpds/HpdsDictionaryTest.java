@@ -30,54 +30,8 @@ import static org.mockito.Mockito.*;
 
 public class HpdsDictionaryTest {
 
-    @Test
-    public void testsetupDifficultClassMocks() {
 
-        // END GOAL: Build a fully mocked stack to properly instantiate a ResourceConnection
-
-        // NEEDS AN ADAPTER + UUID
-        class TestResourceConnection extends BasePicSureResourceConnection {
-            public TestResourceConnection(BasePicSureAdapter adapter, UUID resource_uuid) {
-                super(adapter, resource_uuid);
-            }
-        }
-
-        // NEEDS CONNECTION
-        class TestAdapter extends BasePicSureAdapter {
-            public TestAdapter(Connection connection) {
-                super(connection);
-            }
-        }
-
-        private IPicSureConnection mockConnection = mock(IPicSureConnection.class);
-        class TestConnection implements IPicSureConnection {
-            public UUID RESOURCE_UUID;
-            public URL ENDPOINT_URL;
-            public PicSureConnectionAPI _ConnectionAPI;
-            @Override
-            public URL getENDPOINT() { return null; }
-            @Override
-            public String getTOKEN() { return null; }
-            @Override
-            public void help() { }
-            @Override
-            public String about(String s) { return null; }
-            @Override
-            public void list() {}
-            @Override
-            public String getInfo(String s) { return null; }
-            @Override
-            public String getResources() { return null; }
-            public PicSureConnectionAPI getApiObject() {
-                return this._ConnectionAPI;
-            }
-        }
-
-        TestConnection testConnection = new TestConnection();
-        TestAdapter testAdapter = new TestAdapter(testConnection);
-
-    }
-
+/*
     @Test
     public void testInstantiation() {
         Client client = new Client();
@@ -85,7 +39,8 @@ public class HpdsDictionaryTest {
         assertNotNull("Was Connection object created", connection);
 
         connection = mock(Connection.class);
-        when(connection.get)
+        // TODO: START HERE
+        when(connection.getApiObject()).thenReturn()
 
         HpdsAdapter adapter = new HpdsAdapter(connection);
         assertNotNull("Was adapter object created", adapter);
@@ -180,6 +135,7 @@ public class HpdsDictionaryTest {
         HpdsDictionaryResults resultsList = dictionary.find("asthma");
 
 
+*/
 /*    public void testDoSearch() {
 
         UUID myResourceUUID = UUID.randomUUID();
@@ -219,7 +175,8 @@ public class HpdsDictionaryTest {
         assertSame("Dictionary search results enties are not the same", null, results.keys());
 
 
-*/
+*//*
+
     }
 
 
@@ -265,5 +222,6 @@ public class HpdsDictionaryTest {
         searchResults.put("searchQuery", "asthma");
         return searchResults;
     }
+*/
 
 }
