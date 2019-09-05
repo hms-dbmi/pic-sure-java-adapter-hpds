@@ -92,11 +92,11 @@ public class HpdsAdapterTest {
         UUID resourceId = UUID.randomUUID();
         HpdsResourceConnection resource = HpdsAdapter.useResource(mockConnection, resourceId);
 
-        assertSame("The connection object should be the same", mockConnection, resource.refConnectionObj);
-        assertSame("The ApiObject should be the same", mockAPI, resource.refApiObj);
-        assertSame("The resource UUID should be the same", resourceId, resource.RESOURCE_UUID);
-        assertEquals("The Token should be the same", myToken, resource.TOKEN);
-        assertEquals("The Endpoint should be the same", myEndpoint, resource.ENDPOINT_URL);
+        assertSame("The connection object should be the same", mockConnection, resource.getConnection());
+        assertSame("The ApiObject should be the same", mockAPI, resource.getApiObject());
+        assertSame("The resource UUID should be the same", resourceId, resource.getResourceUUID());
+        assertEquals("The Token should be the same", myToken, resource.getToken());
+        assertEquals("The Endpoint should be the same", myEndpoint, resource.getEndpointUrl());
 
     }
 

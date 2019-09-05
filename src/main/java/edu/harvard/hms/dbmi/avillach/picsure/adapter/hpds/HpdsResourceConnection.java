@@ -6,8 +6,8 @@ import java.util.UUID;
 
 public class HpdsResourceConnection extends BasePicSureResourceConnection {
 
-    protected IPicSureConnection refConnectionObj;
-    protected IPicSureConnectionAPI refApiObj;
+    private IPicSureConnection refConnectionObj;
+    private IPicSureConnectionAPI refApiObj;
 
     protected HpdsResourceConnection(IPicSureConnection connection, UUID resource_uuid) {
         super(connection, resource_uuid);
@@ -17,6 +17,9 @@ public class HpdsResourceConnection extends BasePicSureResourceConnection {
 
     @Override
     public void help() {}
+
+    public IPicSureConnection getConnection() { return this.refConnectionObj; }
+    public IPicSureConnectionAPI getApiObject() { return this.refApiObj; }
 
     public HpdsDictionary dictionary() { return new HpdsDictionary(this); }
     public HpdsQuery query() {

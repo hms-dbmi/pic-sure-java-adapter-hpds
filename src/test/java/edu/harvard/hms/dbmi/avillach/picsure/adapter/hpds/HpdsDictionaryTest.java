@@ -31,29 +31,69 @@ import static org.mockito.Mockito.*;
 public class HpdsDictionaryTest {
 
 
-/*
     @Test
     public void testInstantiation() {
-        Client client = new Client();
-        Connection connection = client.connect("http://any.url","any_value_as_token");
-        assertNotNull("Was Connection object created", connection);
 
-        connection = mock(Connection.class);
-        // TODO: START HERE
-        when(connection.getApiObject()).thenReturn()
+        String myToken = "MY_TOKEN_STRING";
+        URL myEndpoint = null;
+        try {
+            myEndpoint = new URL("http://MY_ENDPOINT_STRING");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        UUID myUUID = UUID.randomUUID();
 
-        HpdsAdapter adapter = new HpdsAdapter(connection);
-        assertNotNull("Was adapter object created", adapter);
+        PicSureConnectionAPI mockAPI = mock(PicSureConnectionAPI.class);
 
-        UUID test_uuid = UUID.randomUUID();
-        HpdsResourceConnection resourceConnection = adapter.useResource(test_uuid);
-        assertNotNull("Was ResourceConnection object created", resourceConnection);
+        HpdsResourceConnection mockResource = mock(HpdsResourceConnection.class);
 
-        HpdsDictionary dictionary = resourceConnection.dictionary();
-        assertNotNull("Was HpdsDictionary object created", dictionary);
+        when(mockResource.getResourceUUID()).thenReturn(myUUID);
+        when(mockResource.getToken()).thenReturn(myToken);
+        when(mockResource.getApiObject()).thenReturn(mockAPI);
 
+        HpdsDictionary myDictionary = new HpdsDictionary(mockResource);
+
+        assertNotNull("Was dictionary object created", myDictionary);
     }
 
+
+    @Test
+    public void testFind() {
+        String myToken = "MY_TOKEN_STRING";
+        String mySearchTerm = "MY_SEARCH_STRING";
+        String myGoodResults = "GOOD_RESULTS";
+
+        URL myEndpoint = null;
+        try {
+            myEndpoint = new URL("http://MY_ENDPOINT_STRING");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        UUID myUUID = UUID.randomUUID();
+
+        PicSureConnectionAPI mockAPI = mock(PicSureConnectionAPI.class);
+
+        HpdsResourceConnection mockResource = mock(HpdsResourceConnection.class);
+        when(mockResource.getResourceUUID()).thenReturn(myUUID);
+        when(mockResource.getToken()).thenReturn(myToken);
+        when(mockResource.getApiObject()).thenReturn(mockAPI);
+
+        SearchResults mySearchResults = new SearchResults();
+        mySearchResults.setResults(myGoodResults);
+        when(mockAPI.search(any(), any())).thenReturn(mySearchResults);
+
+
+
+        HpdsDictionary myDictionary = new HpdsDictionary(mockResource);
+        assertNotNull("Was dictionary object created", myDictionary);
+
+        HpdsDictionaryResults myResults = myDictionary.find(mySearchTerm);
+        assertNotNull("Was dictionary-results object created", myResults);
+        assertEquals("Results were returned", myGoodResults, mySearchResults.getResults());
+
+
+    }
+/*
     @Test
     public void testNoMockSearch() {
         Client client = new Client();
