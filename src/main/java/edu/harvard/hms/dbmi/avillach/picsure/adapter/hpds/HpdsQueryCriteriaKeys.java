@@ -8,10 +8,16 @@ import java.util.NoSuchElementException;
 import java.lang.ArrayStoreException;
 import javax.management.openmbean.KeyAlreadyExistsException;
 import java.lang.IllegalStateException;
-
-
 import edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds.HpdsQueryCriteria;
 
+/**
+ * Used to store query search criteria within a {@link HpdsQuery} instance.
+ * This class only saves keys for search
+ *
+ * @author  Nick Benik
+ * @version %I%, %G%
+ * @since   1.0
+ */
 public class HpdsQueryCriteriaKeys {
     private String helpText;
     protected HashMap<String, HpdsQueryCriteria> entries = new HashMap<>();
@@ -23,16 +29,30 @@ public class HpdsQueryCriteriaKeys {
     }
 
     // ===[ ADD ]========================================
+    /**
+     * Store the name of a single key to search for.
+     * @param key   Identifies a query criterion
+     * @since       1.0
+     */
     protected void add(String key) {
         // add a single key
         List<String> keys = new ArrayList<>();
         keys.add(key);
         this.doAddKeys(keys);
     }
+
+
+    /**
+     * Store the names of several keys to search for.
+     * @param keys  Identifies one or more a query criteria
+     * @since       1.0
+     */
     protected void add(List<String> keys) {
         // add multiple keys
         this.doAddKeys(keys);
     }
+
+
     // ===[ ADD-Implementation ]========================================
     private void doAddKeys(List<String> keys) {
         Integer l = keys.size();
@@ -51,12 +71,26 @@ public class HpdsQueryCriteriaKeys {
 
 
     // ===[ DELETE ]========================================
+    /**
+     * Delete a search criterion by key. It does not matter what kind
+     * of value the criterion is (existence, value, range, categorical).
+     * @param key   Identifies a query criterion
+     * @since       1.0
+     */
     protected void delete(String key) {
         // delete key
         List<String> keys = new ArrayList<>();
         keys.add(key);
         this.doDeleteKeys(keys);
     }
+
+
+    /**
+     * Delete several search criteria by their keys. It does not matter what
+     * kind of value the criterion is (existence, value, range, categorical).
+     * @param keys  Identifies one or more a query criteria
+     * @since       1.0
+     */
     protected void delete(List<String> keys) {
         this.doDeleteKeys(keys);
     }
@@ -74,17 +108,39 @@ public class HpdsQueryCriteriaKeys {
     }
 
     // ===[ OTHER FUNCTIONS ]========================================
+    /**
+     * Class function for use in jShell to print the query object's current criteria on screen.
+     * @since   1.0
+     */
     public void show() {
         // for jShell
     }
+
+
+    /**
+     * Class function for use in jShell to print help instructions on the screen for this object's use.
+     * @since   1.0
+     */
     public void help() {
         // for jShell
     }
 
+
+    /**
+     * Function used to clear all criteria from the instantiated object.
+     * @since   1.0
+     */
     public void clear() {
         this.entries.clear();
     }
 
+
+    /**
+     * Get direct access to the entries in the instantiated object.
+     *
+     * @return  A cloned copy of the internal HashMap used by the object.
+     * @since   1.0
+     */
     public HashMap<String, HpdsQueryCriteria> getRawEntries() {
         // this call also allows changes to the internal state since it does a shallow copy via .clone()
         // this function is used by unit tests

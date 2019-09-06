@@ -10,16 +10,43 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.*;
 
+/**
+ * HpdsDictionary is used to extract data dictionary information from a
+ * HPDS-backed PIC-SURE Resource. The resource it acts upon is dependent on
+ * the resource its parent HpdsResourceConnection is configured to act upon.
+ *
+ * @author  Nick Benik
+ * @version %I%, %G%
+ * @since   1.0
+ */
 public class HpdsDictionary {
     private HpdsResourceConnection resourceConnection;
+
+    /**
+     * Protected constructor function used by parent's {@link HpdsResourceConnection#dictionary()} function.
+     * @param rc    {@link HpdsResourceConnection}
+     */
     protected HpdsDictionary(HpdsResourceConnection rc) {
         this.resourceConnection = rc;
     }
 
+    /**
+     * Class function for use in jShell to print help instructions on the screen for this object's use.
+     * @since   1.0
+     */
     public void help() {
         // for jShell
     }
 
+    /**
+     *  Searches the data dictionary of the HPDS-backed PIC-SURE Resource
+     *  it is configured for by its parent HpdsResourceConnection.
+     *
+     * @param   term
+     * @return  HpdsDictionaryResults containing the matching entries
+     * @see     HpdsDictionaryResults
+     * @see     HpdsResourceConnection
+     */
     public HpdsDictionaryResults find(String term) {
         UUID resourceUUID = this.resourceConnection.getResourceUUID();
 

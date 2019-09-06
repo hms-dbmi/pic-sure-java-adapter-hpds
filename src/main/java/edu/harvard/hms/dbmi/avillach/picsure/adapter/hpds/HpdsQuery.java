@@ -4,46 +4,168 @@ import edu.harvard.hms.dbmi.avillach.hpds.data.query.Query;
 import edu.harvard.hms.dbmi.avillach.hpds.data.query.Filter.DoubleFilter;
 
 
+import java.io.InputStream;
 import java.util.*;
 
+
+/**
+ * HpdsQuery is used to build a query to search a HPDS-backed PIC-SURE Resource
+ * for matching records. The query is build serially through actions against its
+ * HpdsQueryCriteriaKeys and HpdsQueryCriteriaKeyValues entries: {@link #select()}, {@link #require()}, and {@link #filter()}.
+ * Several methods can be used to send the query to the server and get results.
+ * Once a query is run, its criteria change be tweaked and the query can be rerun
+ * to get updated results. Multiple HpdsQuery objects can exist with each one
+ * having its own selection/search criteria.
+ *
+ * @author  Nick Benik
+ * @version %I%, %G%
+ * @since   1.0
+ */
 public class HpdsQuery {
     private HpdsResourceConnection resourceConnection;
     private HpdsQueryCriteriaKeys listSelect = new HpdsQueryCriteriaKeys("");
     private HpdsQueryCriteriaKeys listRequire = new HpdsQueryCriteriaKeys("");
     private HpdsQueryCriteriaKeyValues listFilter = new HpdsQueryCriteriaKeyValues("");
 
+    /**
+     * Constructor function to be called by hiearchial parent object.
+     * @param   rc      A configured HpdsResourceConnection for a
+     *                  HPDS-backed PIC-SURE Resource.
+     * @since   1.0
+     */
     protected HpdsQuery(HpdsResourceConnection rc) {
         this.resourceConnection = rc;
     }
 
+
+    /**
+     * Class function for use in jShell to print help instructions on the screen for this object's use.
+     * @since   1.0
+     */
     public void help() {
         // for jShell
     }
+
+
+    /**
+     * Class function for use in jShell to print the query's current search criteria.
+     * @since   1.0
+     */
     public void show() {
         // for jShell
     }
+
+
+    /**
+     * Class function for use in jShell to print on the screen various query performance metrics for the last query run.
+     * @since   1.0
+     */
+    public void getRunDetails() {
+        // for jShell
+    }
+
+
+    /**
+     * Class function for use in jShell to print JSON on the screen representing the query's current search criteria.
+     * @since   1.0
+     */
+    public void getQueryCommand() {
+        // for jShell
+    }
+
+
+    /**
+     * Used to access the HpdsQuery object's Select criteria.
+     * The Select criteria will only operate on query keys.
+     * @return  HpdsQueryCriteriaKeys
+     * @since   1.0
+     */
     public HpdsQueryCriteriaKeys select() {
         return this.listSelect;
     }
+
+
+    /**
+     * Used to access the HpdsQuery object's Require criteria.
+     * The Require criteria will only operate on query keys.
+     * @return  HpdsQueryCriteriaKeys
+     * @since   1.0
+     */
     public HpdsQueryCriteriaKeys require() {
         return this.listRequire;
     }
+
+
+    /**
+     * Used to access the HpdsQuery object's Filter criteria.
+     * The Filter criteria takes several kinds of inputs to filter by
+     * existence of a query key, a value of a key, a value range of a key,
+     * the existence of one or more matching values within a categorical key.
+     * @return  HpdsQueryCriteriaKeyValues
+     * @see     HpdsQueryCriteriaKeyValues
+     * @since   1.0
+     */
     public HpdsQueryCriteriaKeyValues filter() {
         return this.listFilter;
     }
 
+
+    /**
+     * Used get the count of records in the HPDS Resource that match the configured query criteria.
+     * This function will fire a request to the server to retreve an answer.
+     * @return  Integer or Null
+     * @see     #select()
+     * @see     #require()
+     * @see     #filter()
+     * @since   1.0
+     */
     public Integer getCount() {
-        return 0;
+        // TODO: This should throw an error if server problems are encountered
+        return null;
     }
-    public List<String[]> getResults() {
-        return new ArrayList<String[]>();
+
+
+    /**
+     * Used get the records data from the HPDS Resource that match the configured query criteria.
+     * This function will fire a request to the server to retreve an answer.  The format is a
+     * List of Strings with each string being a single line of the returned data.
+     * @return  List<String>
+     * @see     #select()
+     * @see     #require()
+     * @see     #filter()
+     * @since   1.0
+     */
+    public List<String> getResults() {
+        // TODO: This should throw an error if server problems are encountered
+        return new ArrayList<String>();
     }
-    public void getRunDetails() {
-        // for jShell
+
+
+    /**
+     * Used get the records data from the HPDS Resource that match the configured query criteria.
+     * This function will fire a request to the server to retreve an answer.  The format is an
+     * InputStream fed by the HttpClient containing the returned data.
+     * @return  List<String>
+     * @see     #select()
+     * @see     #require()
+     * @see     #filter()
+     * @since   1.0
+     */
+    public InputStream getRawResults() {
+        // TODO: This should throw an error if server problems are encountered
+        return null;
     }
-    public void getQueryCommand() {
-        // for jShell
-    }
+
+
+    /**
+     * Function used to transform internal QueryCriteria into a PIC-SURE Query object.
+     * The Filter criteria takes several kinds of inputs to filter by
+     * existence of a query key, a value of a key, a value range of a key,
+     * the existence of one or more matching values within a categorical key.
+     * @return  HpdsQueryCriteriaKeyValues
+     * @see     Query
+     * @since   1.0
+     */
     protected Query buildQuery() {
         HashMap<String, HpdsQueryCriteria> entries;
 
@@ -80,7 +202,6 @@ public class HpdsQuery {
                     break;
             }
         }
-
         return tempQuery;
     }
 }

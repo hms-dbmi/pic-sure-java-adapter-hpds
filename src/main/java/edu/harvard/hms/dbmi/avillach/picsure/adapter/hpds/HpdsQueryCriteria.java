@@ -2,6 +2,14 @@ package edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds;
 
 import java.util.ArrayList;
 
+/**
+ * Used to represent a query criterion within {@link HpdsQueryCriteriaKeys} and {@link HpdsQueryCriteriaKeyValues}
+ * accessed via {@link HpdsQuery#select()}, {@link HpdsQuery#require()}, and {@link HpdsQuery#filter()}.
+ *
+ * @author  Nick Benik
+ * @version %I%, %G%
+ * @since   1.0
+ */
 public class HpdsQueryCriteria {
 
     public static final byte ENTRY_TYPE_KEY = 0;
