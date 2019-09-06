@@ -4,8 +4,12 @@ import com.google.gson.Gson;
 import edu.harvard.hms.dbmi.avillach.hpds.data.query.Query;
 import edu.harvard.hms.dbmi.avillach.picsure.client.Client;
 import edu.harvard.hms.dbmi.avillach.picsure.client.Connection;
+import edu.harvard.hms.dbmi.avillach.picsure.client.PicSureConnectionAPI;
+import org.junit.Before;
 import org.junit.Test;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -19,49 +23,96 @@ import static org.mockito.Mockito.*;
 
 public class HpdsQueryTest {
 
-/*
-    @Test
-    public void testInstantiation() {
-        Connection mockConnection = mock(Connection.class);
-        //client.connect("http://any.url","any_value_as_token");
-        // when(mockConnection.getInfo(Matchers.startsWith("foo"))).thenReturn("foo");
-        // assertNotNull("Was mockConnection object created", mockConnection);
-        // when(mockConnection.getResources()).thenCallRealMethod();
+    private UUID myResourceUUID;
+    private UUID myQueryUUID;
+    private URL myEndpoint;
+    private String myToken;
 
-        HpdsAdapter adapter = new HpdsAdapter(mockConnection);
-        assertNotNull("Was adapter object created", adapter);
-        // assertEquals("foo info", adapter.getConncetionToken("foobar"));
-
-
-        UUID test_uuid = UUID.randomUUID();
-        HpdsResourceConnection resourceConnection = adapter.useResource(test_uuid);
-        assertNotNull("Was ResourceConnection object created", resourceConnection);
-
-        HpdsQuery query = resourceConnection.query();
-        assertNotNull("Was HpdsQuery object created", query);
+    @Before
+    public void beforeClass() {
+        this.myResourceUUID = UUID.randomUUID();
+        this.myQueryUUID = UUID.randomUUID();
+        try {
+            this.myEndpoint = new URL("http://some.url");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        this.myToken = "TEST_TOKEN";
     }
 
     @Test
+    public void testInstantiation() {
+        PicSureConnectionAPI mockAPI = mock(PicSureConnectionAPI.class);
+
+        HpdsResourceConnection mockResource = mock(HpdsResourceConnection.class);
+        when(mockResource.getResourceUUID()).thenReturn(this.myResourceUUID);
+        when(mockResource.getToken()).thenReturn(this.myToken);
+        when(mockResource.getApiObject()).thenReturn(mockAPI);
+
+        HpdsQuery myQuery = new HpdsQuery(mockResource);
+        assertNotNull("Was HpdsQuery object created", myQuery);
+    }
+
+
+    @Test
+    public void testVoidFunctions() {
+        PicSureConnectionAPI mockAPI = mock(PicSureConnectionAPI.class);
+
+        HpdsResourceConnection mockResource = mock(HpdsResourceConnection.class);
+        when(mockResource.getResourceUUID()).thenReturn(this.myResourceUUID);
+        when(mockResource.getToken()).thenReturn(this.myToken);
+        when(mockResource.getApiObject()).thenReturn(mockAPI);
+
+        HpdsQuery myQuery = new HpdsQuery(mockResource);
+        assertNotNull("Was HpdsQuery object created", myQuery);
+        myQuery.help();
+        myQuery.show();
+        myQuery.getRunDetails();
+        myQuery.getQueryCommand();
+    }
+
+
+    @Test
+    public void testQueryParametersObjects() {
+        PicSureConnectionAPI mockAPI = mock(PicSureConnectionAPI.class);
+
+        HpdsResourceConnection mockResource = mock(HpdsResourceConnection.class);
+        when(mockResource.getResourceUUID()).thenReturn(this.myResourceUUID);
+        when(mockResource.getToken()).thenReturn(this.myToken);
+        when(mockResource.getApiObject()).thenReturn(mockAPI);
+
+        HpdsQuery myQuery = new HpdsQuery(mockResource);
+        assertNotNull("Was HpdsQuery object created", myQuery);
+
+        HpdsQueryCriteriaKeys testKeys = myQuery.require();
+        assertNotNull("Query.require object is wrong", testKeys);
+
+        testKeys = myQuery.select();
+        assertNotNull("Query.select object is wrong", testKeys);
+
+        HpdsQueryCriteriaKeyValues testKeyValues = myQuery.filter();
+        assertNotNull("Query.filter object is wrong", testKeyValues);
+    }
+
+
+
+    @Test
     public void testQueryGeneration() {
-        Client client = new Client();
-        Connection mockConnection = client.connect("http://any.url","any_value_as_token");
-        assertNotNull("Was mockConnection object created", mockConnection);
+        PicSureConnectionAPI mockAPI = mock(PicSureConnectionAPI.class);
 
-        HpdsAdapter adapter = new HpdsAdapter(mockConnection);
-        assertNotNull("Was adapter object created", adapter);
+        HpdsResourceConnection mockResource = mock(HpdsResourceConnection.class);
+        when(mockResource.getResourceUUID()).thenReturn(this.myResourceUUID);
+        when(mockResource.getToken()).thenReturn(this.myToken);
+        when(mockResource.getApiObject()).thenReturn(mockAPI);
 
-        UUID test_uuid = UUID.randomUUID();
-        HpdsResourceConnection resourceConnection = adapter.useResource(test_uuid);
-        assertNotNull("Was ResourceConnection object created", resourceConnection);
+        HpdsQuery myQuery = new HpdsQuery(mockResource);
+        assertNotNull("Was HpdsQuery object created", myQuery);
 
-        HpdsQuery query = resourceConnection.query();
-        assertNotNull("Was HpdsQuery object created", query);
-
-        query.select().add(Arrays.asList("gender","age"));
-        query.require().add("EMR_ID");
-        query.filter().add("categories", Arrays.asList("cat1","cat2"));
-        query.filter().add("age", 18, 85);
-        Query queryCommand = query.buildQuery();
+        myQuery.select().add(Arrays.asList("gender","age"));
+        myQuery.require().add("EMR_ID");
+        myQuery.filter().add("categories", Arrays.asList("cat1","cat2"));
+        myQuery.filter().add("age", 18, 85);
+        Query queryCommand = myQuery.buildQuery();
 
         // serialize to json for quick testing
         Gson gson = new Gson();
@@ -70,9 +121,6 @@ public class HpdsQueryTest {
         // TEST QUERY OUTPUT
         String expectedJSON = "{\"expectedResultType\":\"DATAFRAME\",\"crossCountFields\":[],\"fields\":[\"gender\",\"age\"],\"requiredFields\":[\"EMR_ID\"],\"numericFilters\":{\"age\":{\"min\":18.0,\"max\":85.0}},\"categoryFilters\":{\"categories\":[\"cat1\",\"cat2\"]}}";
         assertEquals("The query's JSON is not as expected", expectedJSON, outputJSON);
-
     }
-
-*/
 
 }

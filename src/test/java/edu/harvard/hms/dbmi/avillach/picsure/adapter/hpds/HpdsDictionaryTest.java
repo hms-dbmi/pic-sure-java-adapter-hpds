@@ -13,6 +13,7 @@ import edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds.HpdsResourceConnection
 import edu.harvard.hms.dbmi.avillach.picsure.client.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -46,7 +47,6 @@ public class HpdsDictionaryTest {
         PicSureConnectionAPI mockAPI = mock(PicSureConnectionAPI.class);
 
         HpdsResourceConnection mockResource = mock(HpdsResourceConnection.class);
-
         when(mockResource.getResourceUUID()).thenReturn(myUUID);
         when(mockResource.getToken()).thenReturn(myToken);
         when(mockResource.getApiObject()).thenReturn(mockAPI);
@@ -56,6 +56,13 @@ public class HpdsDictionaryTest {
         assertNotNull("Was dictionary object created", myDictionary);
     }
 
+    @Test
+    public void testVoidFunctions() {
+        HpdsResourceConnection mockResource = mock(HpdsResourceConnection.class);
+        HpdsDictionary myDictionary = new HpdsDictionary(mockResource);
+
+        myDictionary.help();
+    }
 
     @Test
     public void testFind() {
@@ -80,8 +87,7 @@ public class HpdsDictionaryTest {
 
         SearchResults mySearchResults = new SearchResults();
         mySearchResults.setResults(myGoodResults);
-        when(mockAPI.search(any(), any())).thenReturn(mySearchResults);
-
+        when(mockAPI.search(same(myUUID), any(QueryRequest.class))).thenReturn(mySearchResults);
 
 
         HpdsDictionary myDictionary = new HpdsDictionary(mockResource);
@@ -94,88 +100,7 @@ public class HpdsDictionaryTest {
 
     }
 /*
-    @Test
-    public void testNoMockSearch() {
-        Client client = new Client();
-        Connection connection = client.connect("http://any.url","any_value_as_token");
-        assertNotNull("Was Connection object created", connection);
 
-        HpdsAdapter adapter = new HpdsAdapter(connection);
-        assertNotNull("Was adapter object created", adapter);
-
-        UUID test_uuid = UUID.randomUUID();
-        HpdsResourceConnection resourceConnection = adapter.useResource(test_uuid);
-        assertNotNull("Was ResourceConnection object created", resourceConnection);
-
-        HpdsDictionary dictionary = resourceConnection.dictionary();
-        assertNotNull("Was HpdsDictionary object created", dictionary);
-
-        HpdsDictionaryResults results = dictionary.find("asthma");
-
-    }
-
-    @Test
-    public void testMockSearch() {
-
-        class TestAdapter extends BasePicSureAdapter {
-            public TestAdapter(Connection connection) {
-                super(connection);
-            }
-        }
-
-        this.protectedConnectionObj = adapter.refConnectionObj;
-        this.protectedApiObj = adapter.refApiObj;
-        this.RESOURCE_UUID = resource_uuid;
-        this.ENDPOINT_URL = adapter.refConnectionObj.getENDPOINT();
-        this.TOKEN = this.protectedConnectionObj.getTOKEN();
-
-
-        class TestConnection extends BasePicSureResourceConnection {
-            public IPicSureConnection refConnectionObj;
-            public IPicSureConnectionAPI refApiObj;
-            public UUID RESOURCE_UUID;
-            public URL ENDPOINT_URL;
-            public String TOKEN;
-            public TestConnection(BasePicSureAdapter adapter, UUID resource_uuid) {
-                super(adapter, resource_uuid);
-            }
-        }
-        class TestApiObj implements IPicSureConnectionAPI {
-            @Override
-            public ResourceInfo resourceInfo(UUID uuid, QueryRequest queryRequest) { return null; }
-            @Override
-            public List<Resource> resources()  {return null;}
-            @Override
-            public SearchResults search(UUID uuid, QueryRequest queryRequest) { return null; }
-            @Override
-            public QueryStatus query(QueryRequest queryRequest) { return null; }
-            @Override
-            public QueryStatus queryStatus(UUID uuid, QueryRequest queryRequest) { return null; }
-            @Override
-            public InputStream queryResult(UUID uuid, QueryRequest queryRequest) { return null; }
-            @Override
-            public InputStream querySync(QueryRequest queryRequest) { return null; }
-            @Override
-            public QueryStatus queryMetdata(UUID uuid) { return null; }
-        }
-        IPicSureConnectionAPI mockApiObj = new TestApiObj();
-
-
-        UUID test_uuid = UUID.randomUUID();
-        HpdsAdapter mockAdapter = mock(HpdsAdapter.class);
-
-        doReturn(new URL("http://any.url")).when(mockAdapter).getConnectionToken();
-
-        HpdsResourceConnection rc = new HpdsResourceConnection(mockAdapter, test_uuid);
-        HpdsResourceConnection resourceConnection = mock(HpdsResourceConnection.class);
-
-        resourceConnection.refApiObj = mock(PicSureConnectionAPI.class);
-
-        HpdsDictionary dictionary = new HpdsDictionary(resourceConnection);
-        HpdsDictionaryResults resultsList = dictionary.find("asthma");
-
-
-*/
 /*    public void testDoSearch() {
 
         UUID myResourceUUID = UUID.randomUUID();

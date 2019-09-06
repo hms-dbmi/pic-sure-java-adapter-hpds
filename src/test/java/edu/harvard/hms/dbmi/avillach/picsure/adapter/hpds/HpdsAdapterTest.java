@@ -100,84 +100,9 @@ public class HpdsAdapterTest {
 
     }
 
-
     @Test
-    public void testMockApiInstantiation() {
-
-
-
-/*
-        PicSureConnectionAPI mockAPI = mock(PicSureConnectionAPI.class);
-        when(mockAPI.info(eq(this.myResourceUUID))).thenReturn(resultStream);
-        when(mockAPI.search(eq(this.myResourceUUID), any(Query.class))).thenReturn(resultStream);
-        when(mockAPI.syncQuery(eq(this.myResourceUUID), any(Query.class))).thenReturn(resultStream);
-//        when(mockAPI.asynchQuery(eq(this.myResourceUUID), any(Query.class))).thenReturn(resultStream.write(this.myQueryUUID.toString().getBytes(Charsets.UTF_8)));
-        when(mockAPI.queryStatus(eq(this.myResourceUUID), eq(this.myQueryUUID))).thenReturn(resultStream);
-        when(mockAPI.queryResults(eq(this.myResourceUUID), eq(this.myQueryUUID))).thenReturn(resultStream);
-
-        Connection mockConnection = mock(Connection.class);
-//        when(mockConnection.getApiObject()).thenReturn((IPicSureConnectionAPI) mockAPI);
-        doReturn((IPicSureConnectionAPI) mockAPI).when(mockConnection).getApiObject();
-
-        //client.connect("http://any.url","any_value_as_token");
-//        when(mockConnection.getInfo(Matchers.startsWith("foo"))).thenReturn("foo");
-        // assertNotNull("Was mockConnection object created", mockConnection);
-        // when(mockConnection.getResources()).thenCallRealMethod();
-
-        assertNotNull("mockConnection object was not valid", mockConnection);
-        IPicSureConnectionAPI testApi = mockConnection.getApiObject();
-        assertSame("The returned API object was not our mockApiObject", mockAPI, testApi);
-*/
+    public void testVoidFunctions() {
+        HpdsAdapter.help();
+        HpdsAdapter.version();
     }
-
-
-
-/*
-    @Test
-    public void testMockApiSearch() {
-
-        Object searchResults = buildSearchAsthma();
-
-        Gson gson = new Gson();
-        String jsonOutput = gson.toJson(searchResults);
-
-        InputStream istream = (InputStream) new ByteArrayInputStream(jsonOutput.getBytes(Charset.forName("UTF-8")));
-        SearchResults searchResults1 = new SearchResults();
-
-
-        URL testApiUrl = null;
-        try {
-            testApiUrl = new URL("http://any.url");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        IPicSureConnectionAPI testApi = new PicSureConnectionAPI(testApiUrl,"token", true);
-        IPicSureConnectionAPI mockAPI = mock(testApi);
-        doReturn(searchResults1).when(mockAPI).search(eq(this.myResourceUUID), any(QueryRequest.class));
-//        when(mockAPI.search(eq(this.myResourceUUID), any(Object.class))).thenReturn(istream);
-
-        Connection mockConnection = mock(Connection.class);
-//        when(mockConnection.getApiObject()).thenReturn((IPicSureConnectionAPI) mockAPI);
-        doReturn((IPicSureConnectionAPI) mockAPI).when(mockConnection).getApiObject();
-
-        //client.connect("http://any.url","any_value_as_token");
-//        when(mockConnection.getInfo(Matchers.startsWith("foo"))).thenReturn("foo");
-        // assertNotNull("Was mockConnection object created", mockConnection);
-        // when(mockConnection.getResources()).thenCallRealMethod();
-
-        assertNotNull("mockConnection object was not valid", mockConnection);
-        IPicSureConnectionAPI testApi = mockConnection.getApiObject();
-        assertSame("The returned API object was not our mockApiObject", mockAPI, testApi);
-        // do a search and get back the results stream
-        QueryRequest qr = new QueryRequest();
-        qr.setQuery("asthma");
-        SearchResults resultsStream = mockAPI.search(this.myResourceUUID, qr);
-
-        assertEquals("The API Object did not return the correct value for info service", jsonOutput, resultsStream.toString());
-
-        System.out.println(jsonOutput);
-
-
-    }
-*/
 }

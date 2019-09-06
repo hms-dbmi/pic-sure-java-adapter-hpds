@@ -15,6 +15,8 @@ import java.util.UUID;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class HpdsResourceConnectionTest {
 
@@ -23,8 +25,6 @@ public class HpdsResourceConnectionTest {
     private URL myEndpoint;
     private String myToken;
     private Connection myConnection;
-
-    public HpdsResourceConnectionTest() {}
 
     @Before
     public void beforeClass() {
@@ -59,4 +59,41 @@ public class HpdsResourceConnectionTest {
         assertSame("myResource.protectedConnectionObj is not the same", myConnection, myResource.getConnection());
 
     }
+
+    @Test
+    public void testVoidFunctions() {
+        Connection mockConnection = mock(Connection.class);
+        when(mockConnection.getTOKEN()).thenReturn(this.myToken);
+        when(mockConnection.getENDPOINT()).thenReturn(this.myEndpoint);
+        HpdsResourceConnection myResource = HpdsAdapter.useResource(mockConnection, this.myResourceUUID);
+
+        myResource.help();
+    }
+
+    @Test
+    public void testDictionaryCreation() {
+        Connection mockConnection = mock(Connection.class);
+        when(mockConnection.getTOKEN()).thenReturn(this.myToken);
+        when(mockConnection.getENDPOINT()).thenReturn(this.myEndpoint);
+
+        HpdsResourceConnection myResource = new HpdsResourceConnection(mockConnection, this.myResourceUUID);
+
+        HpdsDictionary myDictionary = myResource.dictionary();
+        assertNotNull("HpdsDictionary object should be returned", myDictionary);
+
+    }
+
+    @Test
+    public void testQueryCreation() {
+        Connection mockConnection = mock(Connection.class);
+        when(mockConnection.getTOKEN()).thenReturn(this.myToken);
+        when(mockConnection.getENDPOINT()).thenReturn(this.myEndpoint);
+
+        HpdsResourceConnection myResource = new HpdsResourceConnection(mockConnection, this.myResourceUUID);
+
+        HpdsQuery myQuery = myResource.query();
+        assertNotNull("HpdsQuery object should be returned", myQuery);
+
+    }
+
 }
