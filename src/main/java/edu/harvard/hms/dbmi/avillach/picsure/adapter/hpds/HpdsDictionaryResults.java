@@ -13,12 +13,20 @@ import java.util.*;
  * @since   1.0
  */
 public class HpdsDictionaryResults {
-    private Map<String, Object> results;
+    private HashMap<String, HpdsDictionaryRecord> results;
 
 
-    protected HpdsDictionaryResults(Object results) {
-        // reformat the object structure into a list
-        HashMap<String, Object> processedResults = new HashMap<>();
+    protected HpdsDictionaryResults(LinkedHashMap<String, HashMap> results) {
+        // reformat the object structure
+        HashMap<String, HpdsDictionaryRecord> processedResults = new HashMap();
+
+        for (Map.Entry<String, HashMap> classEntry : results.entrySet()) {
+            HashMap<String, HashMap> classRecords = classEntry.getValue();
+            for (Map.Entry<String, HashMap> singleRecord : classRecords.entrySet()) {
+                HpdsDictionaryRecord transformedRecord = new HpdsDictionaryRecord(classEntry.getKey(), singleRecord);
+                processedResults.put(singleRecord.getKey(), transformedRecord);
+            }
+        }
         this.results = processedResults;
     }
 
@@ -58,7 +66,7 @@ public class HpdsDictionaryResults {
      */
     public List<Object> entries() {
         List<Object> ret = new ArrayList<>();
-        ret.addAll(this.results.entrySet());
+        ret.addAll(this.results.values());
         return ret;
     }
 }

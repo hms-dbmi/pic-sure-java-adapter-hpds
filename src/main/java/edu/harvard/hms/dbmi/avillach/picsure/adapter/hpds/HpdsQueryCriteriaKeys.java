@@ -1,14 +1,9 @@
 package edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.lang.reflect.Array;
+import java.util.*;
 
-import java.util.NoSuchElementException;
-import java.lang.ArrayStoreException;
 import javax.management.openmbean.KeyAlreadyExistsException;
-import java.lang.IllegalStateException;
-import edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds.HpdsQueryCriteria;
 
 /**
  * Used to store query search criteria within a {@link HpdsQuery} instance.
@@ -34,7 +29,7 @@ public class HpdsQueryCriteriaKeys {
      * @param key   Identifies a query criterion
      * @since       1.0
      */
-    protected void add(String key) {
+    public void add(String key) {
         // add a single key
         List<String> keys = new ArrayList<>();
         keys.add(key);
@@ -47,7 +42,7 @@ public class HpdsQueryCriteriaKeys {
      * @param keys  Identifies one or more a query criteria
      * @since       1.0
      */
-    protected void add(List<String> keys) {
+    public void add(List<String> keys) {
         // add multiple keys
         this.doAddKeys(keys);
     }
@@ -77,7 +72,7 @@ public class HpdsQueryCriteriaKeys {
      * @param key   Identifies a query criterion
      * @since       1.0
      */
-    protected void delete(String key) {
+    public void delete(String key) {
         // delete key
         List<String> keys = new ArrayList<>();
         keys.add(key);
@@ -91,7 +86,7 @@ public class HpdsQueryCriteriaKeys {
      * @param keys  Identifies one or more a query criteria
      * @since       1.0
      */
-    protected void delete(List<String> keys) {
+    public void delete(List<String> keys) {
         this.doDeleteKeys(keys);
     }
     // ===[ DELETE-Implementation ]========================================
@@ -145,5 +140,10 @@ public class HpdsQueryCriteriaKeys {
         // this call also allows changes to the internal state since it does a shallow copy via .clone()
         // this function is used by unit tests
         return (HashMap<String, HpdsQueryCriteria>) this.entries.clone();
+    }
+
+    public ArrayList<String> getJsonObject() {
+        ArrayList<String> ret = (ArrayList<String>) this.entries.keySet();
+        return ret;
     }
 }

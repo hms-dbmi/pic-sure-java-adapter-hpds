@@ -5,7 +5,7 @@ import edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds.HpdsAdapter;
 import edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds.HpdsResourceConnection;
 import edu.harvard.hms.dbmi.avillach.picsure.client.Client;
 import edu.harvard.hms.dbmi.avillach.picsure.client.Connection;
-import edu.harvard.hms.dbmi.avillach.picsure.client.IPicSureConnectionAPI;
+import edu.harvard.hms.dbmi.avillach.picsure.client.api.IPicSureConnectionAPI;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +31,7 @@ public class HpdsResourceConnectionTest {
         this.myResourceUUID = UUID.randomUUID();
         this.myQueryUUID = UUID.randomUUID();
         try {
-            this.myEndpoint = new URL("http://some.url");
+            this.myEndpoint = new URL("http://some.url/");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -45,8 +45,8 @@ public class HpdsResourceConnectionTest {
 
         Connection myConnection = Client.connect(this.myEndpoint, this.myToken);
         assertNotNull("myConnection object was not valid", myConnection);
-        assertSame("myConnection.TOKEN is not the same", this.myToken, myConnection.TOKEN);
-        assertSame("myConnection.ENDPOINT is not the same", this.myEndpoint, myConnection.ENDPOINT);
+        assertSame("myConnection.TOKEN is not the same", this.myToken, myConnection.getTOKEN());
+        assertSame("myConnection.ENDPOINT is not the same", this.myEndpoint, myConnection.getENDPOINT());
         IPicSureConnectionAPI myAPI = myConnection.getApiObject();
 
 

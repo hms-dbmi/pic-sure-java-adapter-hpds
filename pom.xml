@@ -12,6 +12,54 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.1.1</version>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds.example.HpdsExample</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>create-example-jar</id>-->
+<!--						<phase>package</phase>-->
+<!--						<configuration>-->
+<!--							<descriptorRefs>-->
+<!--								<descriptorRef>jar-with-dependencies</descriptorRef>-->
+<!--							</descriptorRefs>-->
+<!--							<archive>-->
+<!--								<manifest>-->
+<!--									<mainClass>edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds.example.HpdsExample</mainClass>-->
+<!--								</manifest>-->
+<!--							</archive>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--					<execution>-->
+<!--						<id>create-client-jar</id>-->
+<!--						<phase>package</phase>-->
+<!--						<configuration>-->
+<!--							<descriptorRefs>-->
+<!--								<descriptorRef>jar-with-dependencies</descriptorRef>-->
+<!--							</descriptorRefs>-->
+<!--							<archive>-->
+<!--								<manifest>-->
+<!--									<mainClass>edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds.example.HpdsExample</mainClass>-->
+<!--								</manifest>-->
+<!--							</archive>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--				</executions>-->
+
+			</plugin>
+		</plugins>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -87,13 +135,6 @@
 			<groupId>edu.harvard.hms.dbmi.avillach.hpds</groupId>
 			<artifactId>client-api</artifactId>
 			<version>1.0-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.8.5</version>
-			<scope>compile</scope>
 		</dependency>
 
 	</dependencies>

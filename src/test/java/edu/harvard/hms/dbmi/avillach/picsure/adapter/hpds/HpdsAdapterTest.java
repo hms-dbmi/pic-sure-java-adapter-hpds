@@ -1,15 +1,8 @@
 package edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds;
 
-import edu.harvard.dbmi.avillach.domain.QueryRequest;
-import edu.harvard.dbmi.avillach.domain.SearchResults;
-import edu.harvard.hms.dbmi.avillach.hpds.data.query.Query;
-import edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds.*;
-import edu.harvard.hms.dbmi.avillach.picsure.client.*;
-import org.apache.commons.codec.Charsets;
-import org.junit.Before;
+import edu.harvard.hms.dbmi.avillach.picsure.client.PicSureConnectionAPI;
+import edu.harvard.hms.dbmi.avillach.picsure.client.api.IPicSureConnection;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,8 +13,6 @@ import java.util.UUID;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-
-import com.google.gson.Gson;
 
 
 public class HpdsAdapterTest {

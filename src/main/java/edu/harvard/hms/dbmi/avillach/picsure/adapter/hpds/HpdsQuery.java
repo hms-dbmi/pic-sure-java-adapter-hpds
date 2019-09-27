@@ -1,10 +1,21 @@
 package edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import edu.harvard.dbmi.avillach.domain.QueryRequest;
 import edu.harvard.hms.dbmi.avillach.hpds.data.query.Query;
 import edu.harvard.hms.dbmi.avillach.hpds.data.query.Filter.DoubleFilter;
+import edu.harvard.hms.dbmi.avillach.hpds.data.query.ResultType;
+import edu.harvard.hms.dbmi.avillach.picsure.client.api.IPicSureConnectionAPI;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 
@@ -71,6 +82,18 @@ public class HpdsQuery {
      */
     public void getQueryCommand() {
         // for jShell
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        // print the results
+        String output = null;
+        try {
+            output = mapper.writeValueAsString(this.buildQuery());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        System.out.println(output);
     }
 
 
@@ -121,7 +144,23 @@ public class HpdsQuery {
      */
     public Integer getCount() {
         // TODO: This should throw an error if server problems are encountered
-        return null;
+        Query countQuery = this.buildQuery();
+        countQuery.expectedResultType = ResultType.COUNT;
+        IPicSureConnectionAPI apiObject = this.resourceConnection.getApiObject();
+
+        QueryRequest request = new QueryRequest();
+        request.setResourceUUID(this.resourceConnection.getResourceUUID());
+        request.setQuery(countQuery);
+        InputStream resultsStream = apiObject.querySync(request);
+
+        Integer returnedCount = null;
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(resultsStream, StandardCharsets.UTF_8)) ) {
+            returnedCount = Integer.parseInt(reader.readLine());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return returnedCount;
     }
 
 

@@ -2,8 +2,6 @@ package edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds;
 
 import com.google.gson.Gson;
 import edu.harvard.hms.dbmi.avillach.hpds.data.query.Query;
-import edu.harvard.hms.dbmi.avillach.picsure.client.Client;
-import edu.harvard.hms.dbmi.avillach.picsure.client.Connection;
 import edu.harvard.hms.dbmi.avillach.picsure.client.PicSureConnectionAPI;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +31,7 @@ public class HpdsQueryTest {
         this.myResourceUUID = UUID.randomUUID();
         this.myQueryUUID = UUID.randomUUID();
         try {
-            this.myEndpoint = new URL("http://some.url");
+            this.myEndpoint = new URL("http://some.url/");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

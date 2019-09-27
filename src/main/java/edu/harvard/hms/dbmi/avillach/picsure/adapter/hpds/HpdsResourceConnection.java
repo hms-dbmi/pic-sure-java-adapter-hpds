@@ -1,6 +1,8 @@
 package edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds;
 
-import edu.harvard.hms.dbmi.avillach.picsure.client.*;
+import edu.harvard.hms.dbmi.avillach.picsure.client.api.BasePicSureResourceConnection;
+import edu.harvard.hms.dbmi.avillach.picsure.client.api.IPicSureConnection;
+import edu.harvard.hms.dbmi.avillach.picsure.client.api.IPicSureConnectionAPI;
 
 import java.util.UUID;
 

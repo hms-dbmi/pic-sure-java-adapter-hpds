@@ -1,32 +1,16 @@
 package edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds;
 
-import com.google.gson.Gson;
 import edu.harvard.dbmi.avillach.domain.QueryRequest;
-import edu.harvard.dbmi.avillach.domain.QueryStatus;
-import edu.harvard.dbmi.avillach.domain.ResourceInfo;
 import edu.harvard.dbmi.avillach.domain.SearchResults;
-import edu.harvard.dbmi.avillach.data.entity.Resource;
-import edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds.HpdsAdapter;
-import edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds.HpdsDictionary;
-import edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds.HpdsDictionaryResults;
-import edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds.HpdsResourceConnection;
 import edu.harvard.hms.dbmi.avillach.picsure.client.*;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.ArgumentCaptor;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 public class HpdsDictionaryTest {
@@ -68,7 +52,7 @@ public class HpdsDictionaryTest {
     public void testFind() {
         String myToken = "MY_TOKEN_STRING";
         String mySearchTerm = "MY_SEARCH_STRING";
-        String myGoodResults = "GOOD_RESULTS";
+        LinkedHashMap<String, LinkedHashMap> myGoodResults = new LinkedHashMap<>();
 
         URL myEndpoint = null;
         try {

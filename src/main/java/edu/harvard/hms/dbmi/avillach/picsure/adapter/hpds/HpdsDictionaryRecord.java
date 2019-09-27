@@ -1,5 +1,6 @@
 package edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,14 +18,16 @@ public class HpdsDictionaryRecord {
     public final String name;
     public final boolean categorical;
     public final List<String> categoryValues;
-    public final long observationCount;
+    public final Integer observationCount;
+    public final String HpdsType;
 
-    protected HpdsDictionaryRecord(String key, Object record) {
-        this.key = key;
-        this.name = ((Map<String, String>) record).get("name");
-        this.categorical = (((Map<String, Boolean>) record).get("categorical"));
-        this.observationCount = (((Map<String, Long>) record).get("observationCount"));
-        this.categoryValues = (((Map<String, List<String>>) record).get("categoryValues"));
-
+    protected HpdsDictionaryRecord(String hpdsTypeName, Map.Entry<String, HashMap> record) {
+        this.HpdsType = hpdsTypeName;
+        this.key = record.getKey();
+        HashMap<String, Object> recordValues = record.getValue();
+        this.name = (String) recordValues.get("name");
+        this.categorical = (Boolean) recordValues.get("categorical");
+        this.observationCount = (Integer) recordValues.get("observationCount");
+        this.categoryValues = (List<String>) recordValues.get("categoryValues");
     }
 }
