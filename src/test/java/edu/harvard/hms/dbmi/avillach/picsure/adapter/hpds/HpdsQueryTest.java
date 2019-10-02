@@ -63,9 +63,9 @@ public class HpdsQueryTest {
 
         HpdsQuery myQuery = new HpdsQuery(mockResource);
         assertNotNull("Was HpdsQuery object created", myQuery);
-        myQuery.help();
-        myQuery.show();
-        myQuery.getRunDetails();
+//        myQuery.help();
+//        myQuery.show();
+//        myQuery.getRunDetails();
         myQuery.getQueryCommand();
     }
 

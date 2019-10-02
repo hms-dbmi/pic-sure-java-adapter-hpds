@@ -93,7 +93,7 @@ public class HpdsAdapterTest {
 
     @Test
     public void testVoidFunctions() {
-        HpdsAdapter.help();
-        HpdsAdapter.version();
+//        HpdsAdapter.help();
+//        HpdsAdapter.version();
     }
 }

@@ -67,7 +67,7 @@ public class HpdsResourceConnectionTest {
         when(mockConnection.getENDPOINT()).thenReturn(this.myEndpoint);
         HpdsResourceConnection myResource = HpdsAdapter.useResource(mockConnection, this.myResourceUUID);
 
-        myResource.help();
+//        myResource.help();
     }
 
     @Test

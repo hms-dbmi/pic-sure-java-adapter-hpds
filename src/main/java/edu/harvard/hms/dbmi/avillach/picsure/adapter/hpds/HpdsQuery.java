@@ -178,7 +178,6 @@ public class HpdsQuery {
                 lineBuffer = reader.readLine().split("\\,");
             }
         } catch (NullPointerException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

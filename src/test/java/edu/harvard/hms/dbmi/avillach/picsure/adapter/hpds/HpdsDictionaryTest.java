@@ -45,7 +45,7 @@ public class HpdsDictionaryTest {
         HpdsResourceConnection mockResource = mock(HpdsResourceConnection.class);
         HpdsDictionary myDictionary = new HpdsDictionary(mockResource);
 
-        myDictionary.help();
+ //       myDictionary.help();
     }
 
     @Test

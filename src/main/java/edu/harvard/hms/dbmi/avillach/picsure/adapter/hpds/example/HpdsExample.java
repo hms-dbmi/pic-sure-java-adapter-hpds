@@ -85,7 +85,7 @@ public class HpdsExample {
 
         // display the query
         System.out.println("Query JSON:");
-        query.getQueryCommand();
+        System.out.println(query.getQueryCommand()+"\n");
 
         // display the number of matching records
         Integer queryCountResult = query.getCount();
