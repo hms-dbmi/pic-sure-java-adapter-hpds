@@ -25,22 +25,6 @@ public class HpdsAdapter extends BasePicSureAdapter {
     private IPicSureConnection hpdsConnectionObj;
 
     /**
-     * Class function for use in jShell to print help instructions on the screen for this object's use.
-     * @since   1.0
-     */
-    public static void help() {
-        // for jShell
-    }
-
-    /**
-     * Class function for use in jShell to get version of HPDS adapter library.
-     * @since   1.0
-     */
-    public static void version() {
-        // for jShell
-    }
-
-    /**
      * Static function that instantiates a configured HpdsResourceConnection.
      *
      * @param connection        a configured IPicSureConnection
@@ -48,7 +32,7 @@ public class HpdsAdapter extends BasePicSureAdapter {
      *                          the HpdsResourceConnection will operate against
      * @return                  HpdsResourceConnection
      * @see                     edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds.HpdsResourceConnection
-     * @see                     edu.harvard.hms.dbmi.avillach.picsure.client.IPicSureConnection
+     * @see                     edu.harvard.hms.dbmi.avillach.picsure.client.api.IPicSureConnection
      * @since                   1.0
      */
     public static HpdsResourceConnection useResource(IPicSureConnection connection, UUID resource_uuid) {

@@ -26,19 +26,12 @@ public class HpdsDictionary {
     }
 
     /**
-     * Class function for use in jShell to print help instructions on the screen for this object's use.
-     * @since   1.0
-     */
-    public void help() {
-        // for jShell
-    }
-
-    /**
      *  Searches the data dictionary of the HPDS-backed PIC-SURE Resource
      *  it is configured for by its parent HpdsResourceConnection.
      *
      * @param   term A string to search the ontology for
      * @return  HpdsDictionaryResults containing the matching entries
+     * @throws  SecurityException when authentication fails
      * @see     HpdsDictionaryResults
      * @see     HpdsResourceConnection
      */

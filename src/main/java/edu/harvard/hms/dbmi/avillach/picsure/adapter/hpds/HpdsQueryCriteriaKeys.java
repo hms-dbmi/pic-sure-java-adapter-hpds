@@ -104,24 +104,6 @@ public class HpdsQueryCriteriaKeys {
 
     // ===[ OTHER FUNCTIONS ]========================================
     /**
-     * Class function for use in jShell to print the query object's current criteria on screen.
-     * @since   1.0
-     */
-    public void show() {
-        // for jShell
-    }
-
-
-    /**
-     * Class function for use in jShell to print help instructions on the screen for this object's use.
-     * @since   1.0
-     */
-    public void help() {
-        // for jShell
-    }
-
-
-    /**
      * Function used to clear all criteria from the instantiated object.
      * @since   1.0
      */

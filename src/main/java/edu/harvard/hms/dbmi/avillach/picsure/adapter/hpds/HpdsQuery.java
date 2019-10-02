@@ -50,40 +50,13 @@ public class HpdsQuery {
     }
 
 
-    /**
-     * Class function for use in jShell to print help instructions on the screen for this object's use.
-     * @since   1.0
-     */
-    public void help() {
-        // for jShell
-    }
 
 
     /**
-     * Class function for use in jShell to print the query's current search criteria.
-     * @since   1.0
-     */
-    public void show() {
-        // for jShell
-    }
-
-
-    /**
-     * Class function for use in jShell to print on the screen various query performance metrics for the last query run.
-     * @since   1.0
-     */
-    public void getRunDetails() {
-        // for jShell
-    }
-
-
-    /**
-     * Class function for use in jShell to print JSON on the screen representing the query's current search criteria.
+     * Class function to get JSON string representing the query's current search criteria.
      * @since   1.0
      */
     public String getQueryCommand() {
-        // for jShell
-
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
@@ -138,6 +111,7 @@ public class HpdsQuery {
      * Used get the count of records in the HPDS Resource that match the configured query criteria.
      * This function will fire a request to the server to retreve an answer.
      * @return  Integer or Null
+     * @throws  SecurityException when authentication fails
      * @see     #select()
      * @see     #require()
      * @see     #filter()
@@ -170,6 +144,7 @@ public class HpdsQuery {
      * This function will fire a request to the server to retreve an answer.  The format is a
      * List of Strings with each string being a single line of the returned data.
      * @return  List<Hashmap<String, String>>
+     * @throws  SecurityException when authentication fails
      * @see     #select()
      * @see     #require()
      * @see     #filter()
@@ -203,10 +178,10 @@ public class HpdsQuery {
                 lineBuffer = reader.readLine().split("\\,");
             }
         } catch (NullPointerException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return ret;
     }
 
@@ -216,6 +191,7 @@ public class HpdsQuery {
      * This function will fire a request to the server to retreve an answer.  The format is an
      * InputStream fed by the HttpClient containing the returned data.
      * @return  InputStream
+     * @throws  SecurityException when authentication fails
      * @see     #select()
      * @see     #require()
      * @see     #filter()

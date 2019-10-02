@@ -87,10 +87,12 @@ public class HpdsExample {
         System.out.println("Query JSON:");
         query.getQueryCommand();
 
+        // display the number of matching records
         Integer queryCountResult = query.getCount();
         System.out.println("Query COUNT:");
         System.out.println(queryCountResult+"\n");
 
+        // retrieve all records and display them (or at least the first 10 results)
         ArrayList<HashMap<String, String>> queryResult = query.getResults();
         System.out.println("Query RESULT:");
         for (int i=0; i<queryResult.size() && i<10; i++) {

@@ -21,11 +21,12 @@ public class HpdsQueryCriteria {
     public static final String ERROR_MSG_ENTRY_WRONG_TYPE = "Can not change query restriction, existing key references the wrong type: ";
     public static final String ERROR_MSG_ENTRY_INVALID_STATE = "Your modification action(s) have put an existing query criteria into an invalid state. Example: a range without min or max value. Key is : ";
 
-    public String queryKey;
-    public byte entryType;
-    public ArrayList<String> categories;
-    public Double min;
-    public Double max;
+    public String queryKey;                 // unique search key used by HPDS to identify data element
+    public byte entryType;                  // entry type being one of the following: ENTRY_TYPE_KEY, ENTRY_TYPE_RANGE, ENTRY_TYPE_CATEGORICAL
+    public ArrayList<String> categories;    // a list of category values which the query will require the results to satisfy at least one occurrence of.
+    public Double min;                      // the minimum value required to satisfy (if not null)
+    public Double max;                      // the maximum value required to satisfy (if not null)
+
 
     public HpdsQueryCriteria() {
         this.queryKey = null;

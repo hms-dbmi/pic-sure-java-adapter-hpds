@@ -14,12 +14,12 @@ import java.util.Map;
  * @since   1.0
  */
 public class HpdsDictionaryRecord {
-    public final String key;
-    public final String name;
-    public final boolean categorical;
-    public final List<String> categoryValues;
-    public final Integer observationCount;
-    public final String HpdsType;
+    public final String key;                    // unique search key used by HPDS to identify data element
+    public final String name;                   // human readable name for data element
+    public final boolean categorical;           // is the data element a categorical entry?
+    public final List<String> categoryValues;   // a listing of all valid categorical values for the entry
+    public final Integer observationCount;      // number of records which use this data element
+    public final String HpdsType;               // identifying which search class the data element belongs to (Example, "phenotype", "genotype", etc)
 
     protected HpdsDictionaryRecord(String hpdsTypeName, Map.Entry<String, HashMap> record) {
         this.HpdsType = hpdsTypeName;

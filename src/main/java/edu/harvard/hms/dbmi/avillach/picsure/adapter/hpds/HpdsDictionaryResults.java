@@ -17,9 +17,8 @@ public class HpdsDictionaryResults {
 
 
     protected HpdsDictionaryResults(LinkedHashMap<String, HashMap> results) {
-        // reformat the object structure
+        // reformat the passed object structure from native result to HpdsDictionaryResults structure
         HashMap<String, HpdsDictionaryRecord> processedResults = new HashMap();
-
         for (Map.Entry<String, HashMap> classEntry : results.entrySet()) {
             HashMap<String, HashMap> classRecords = classEntry.getValue();
             for (Map.Entry<String, HashMap> singleRecord : classRecords.entrySet()) {
@@ -28,15 +27,6 @@ public class HpdsDictionaryResults {
             }
         }
         this.results = processedResults;
-    }
-
-
-    /**
-     * Class function for use in jShell to print help instructions on the screen for this object's use.
-     * @since   1.0
-     */
-    public void help() {
-        // for jShell
     }
 
 

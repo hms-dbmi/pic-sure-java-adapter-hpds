@@ -46,16 +46,6 @@ public class HpdsResourceConnection extends BasePicSureResourceConnection {
     }
 
 
-    /**
-     * Class function for use in jShell to print help instructions on the screen for this object's use.
-     * @since   1.0
-     */
-    @Override
-    public void help() {
-        // for jShell
-    }
-
-
     public IPicSureConnection getConnection() {
         return this.refConnectionObj;
     }
@@ -69,6 +59,4 @@ public class HpdsResourceConnection extends BasePicSureResourceConnection {
     public HpdsQuery query() {
         return new HpdsQuery(this);
     }
-
-
 }
