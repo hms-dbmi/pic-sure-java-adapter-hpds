@@ -36,7 +36,7 @@ public class HpdsResourceConnection extends BasePicSureResourceConnection {
      * @param resource_uuid     a UUID that points to the PIC-SURE resource that
      *                          this HpdsResourceConnection will operate against
      * @see                     edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds.HpdsResourceConnection
-     * @see                     edu.harvard.hms.dbmi.avillach.picsure.client.IPicSureConnection
+     * @see                     edu.harvard.hms.dbmi.avillach.picsure.client.api.IPicSureConnection
      * @since                   1.0
      */
     protected HpdsResourceConnection(IPicSureConnection connection, UUID resource_uuid) {

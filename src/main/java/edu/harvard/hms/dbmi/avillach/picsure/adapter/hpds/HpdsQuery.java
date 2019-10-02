@@ -8,6 +8,7 @@ import edu.harvard.hms.dbmi.avillach.hpds.data.query.Query;
 import edu.harvard.hms.dbmi.avillach.hpds.data.query.Filter.DoubleFilter;
 import edu.harvard.hms.dbmi.avillach.hpds.data.query.ResultType;
 import edu.harvard.hms.dbmi.avillach.picsure.client.api.IPicSureConnectionAPI;
+import org.apache.http.impl.auth.HttpAuthenticator;
 
 
 import java.io.BufferedReader;
@@ -80,7 +81,7 @@ public class HpdsQuery {
      * Class function for use in jShell to print JSON on the screen representing the query's current search criteria.
      * @since   1.0
      */
-    public void getQueryCommand() {
+    public String getQueryCommand() {
         // for jShell
 
         ObjectMapper mapper = new ObjectMapper();
@@ -93,7 +94,7 @@ public class HpdsQuery {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        System.out.println(output);
+        return output;
     }
 
 
@@ -142,7 +143,7 @@ public class HpdsQuery {
      * @see     #filter()
      * @since   1.0
      */
-    public Integer getCount() {
+    public Integer getCount() throws SecurityException {
         // TODO: This should throw an error if server problems are encountered
         Query countQuery = this.buildQuery();
         countQuery.expectedResultType = ResultType.COUNT;
@@ -168,15 +169,45 @@ public class HpdsQuery {
      * Used get the records data from the HPDS Resource that match the configured query criteria.
      * This function will fire a request to the server to retreve an answer.  The format is a
      * List of Strings with each string being a single line of the returned data.
-     * @return  List<String>
+     * @return  List<Hashmap<String, String>>
      * @see     #select()
      * @see     #require()
      * @see     #filter()
      * @since   1.0
      */
-    public List<String> getResults() {
+    public ArrayList<HashMap<String, String>> getResults() throws SecurityException {
         // TODO: This should throw an error if server problems are encountered
-        return new ArrayList<String>();
+
+        ArrayList<HashMap<String,String>> ret = new ArrayList();
+
+        // get results
+        InputStream resultsStream = this.getRawResults();
+
+        String[] header = null;
+        String[] lineBuffer = null;
+        HashMap<String, String> lineObject = null;
+        // convert to cleaner output
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(resultsStream, StandardCharsets.UTF_8)) ) {
+            header = reader.readLine().split("\\,");
+
+            lineBuffer = reader.readLine().split("\\,");
+            while (lineBuffer != null) {
+                lineObject = new HashMap<>();
+                // copy line elements to the hashmap object for the line
+                for(int i=0; i<header.length; i++) {
+                    lineObject.put(header[i], lineBuffer[i]);
+                }
+                // add the current lineObject to our output array
+                ret.add(lineObject);
+                // try to read the next line
+                lineBuffer = reader.readLine().split("\\,");
+            }
+        } catch (NullPointerException e) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return ret;
     }
 
 
@@ -184,15 +215,25 @@ public class HpdsQuery {
      * Used get the records data from the HPDS Resource that match the configured query criteria.
      * This function will fire a request to the server to retreve an answer.  The format is an
      * InputStream fed by the HttpClient containing the returned data.
-     * @return  List<String>
+     * @return  InputStream
      * @see     #select()
      * @see     #require()
      * @see     #filter()
      * @since   1.0
      */
-    public InputStream getRawResults() {
+    public InputStream getRawResults() throws SecurityException {
         // TODO: This should throw an error if server problems are encountered
-        return null;
+
+        Query dfQuery = this.buildQuery();
+        dfQuery.expectedResultType = ResultType.DATAFRAME;
+        IPicSureConnectionAPI apiObject = this.resourceConnection.getApiObject();
+
+        QueryRequest request = new QueryRequest();
+        request.setResourceUUID(this.resourceConnection.getResourceUUID());
+        request.setQuery(dfQuery);
+        InputStream resultsStream = apiObject.querySync(request);
+
+        return resultsStream;
     }
 
 

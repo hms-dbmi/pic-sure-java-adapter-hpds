@@ -7,9 +7,7 @@ import edu.harvard.hms.dbmi.avillach.picsure.adapter.hpds.*;
 import edu.harvard.hms.dbmi.avillach.picsure.client.Client;
 import edu.harvard.hms.dbmi.avillach.picsure.client.Connection;
 
-import java.util.Arrays;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -88,12 +86,16 @@ public class HpdsExample {
         // display the query
         System.out.println("Query JSON:");
         query.getQueryCommand();
-        System.out.println("\n");
 
         Integer queryCountResult = query.getCount();
         System.out.println("Query COUNT:");
-        System.out.println(queryCountResult);
+        System.out.println(queryCountResult+"\n");
 
+        ArrayList<HashMap<String, String>> queryResult = query.getResults();
+        System.out.println("Query RESULT:");
+        for (int i=0; i<queryResult.size() && i<10; i++) {
+            System.out.println(queryResult.get(i));
+        }
     }
 
 }

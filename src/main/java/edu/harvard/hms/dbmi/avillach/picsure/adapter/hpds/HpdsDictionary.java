@@ -42,7 +42,7 @@ public class HpdsDictionary {
      * @see     HpdsDictionaryResults
      * @see     HpdsResourceConnection
      */
-    public HpdsDictionaryResults find(String term) {
+    public HpdsDictionaryResults find(String term) throws SecurityException {
         UUID resourceUUID = this.resourceConnection.getResourceUUID();
 
         // issue request via the internal API object
